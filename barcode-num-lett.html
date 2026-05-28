@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 85%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s;
+            text-align: center;
+            text-transform: uppercase; /* Purely visual for the user */
+        }
+        input:focus {
+            border-color: #28a745;
+        }
+        .barcode-wrapper {
+            margin-top: 30px;
+            min-height: 140px;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+            border-radius: 4px;
+            border: 1px dashed #ddd;
+        }
+        @media print {
+          h1, p, input, .container {
+            display: none;
+          }
+          .barcode-wrapper, .container {
+            margin: 0;
+            padding: 0;
+            border: 0;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Barcode Generator</h1>
+    <p>(By Jenner - L7 B2)</p>
+    
+    <input type="text" id="barcodeInput" placeholder="Type letters or numbers..." autofocus>
+    
+    <!-- <div class="barcode-wrapper"> -->
+        <!-- <svg id="barcode"></svg> -->
+    <!-- </div> -->
+</div>
+
+
+    <div class="barcode-wrapper">
+        <svg id="barcode"></svg>
+    </div>
+
+<script>
+    const barcodeInput = document.getElementById('barcodeInput');
+    
+    const tDate = new Date();
+    let tyear = tDate.getFullYear(); tyear = tyear.toString(); tyear = tyear.slice(2,4);
+    let tmonth = tDate.getMonth(); tmonth++; if(tmonth<10){tmonth="0"+tmonth}else{tmonth=tmonth.toString()}
+    let tdate = tDate.getDate(); if(tdate<10){tdate="0"+tdate}else{tdate=tdate.toString()}
+    console.info(tyear+tmonth+tdate+"BM07");
+    document.getElementById("barcodeInput").value=tyear+tmonth+tdate+"BM07";
+    //
+
+    barcodeInput.addEventListener('input', function() {
+        const value = this.value.trim();
+
+        if (value.length > 10) {
+            // Code 128 handles standard text and numbers perfectly
+            JsBarcode("#barcode", value, {
+                format: "CODE128",
+                lineColor: "#000",
+                width: 2,
+                height: 80,
+                displayValue: true // Shows the text beneath the bars
+            });
+        } else {
+            clearBarcode();
+        }
+    });
+
+    function clearBarcode() {
+        const svg = document.getElementById('barcode');
+        while (svg.firstChild) {
+            svg.removeChild(svg.firstChild);
+        }
+    }
+</script>
+
+</body>
+</html>
