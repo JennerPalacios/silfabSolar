@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Creator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #222;
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #4a5568;
+        }
+
+        .control-label span {
+            font-weight: normal;
+            color: #718096;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Inputs Canvas Section */
+        .canvas-section {
+            background-color: #fff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: gap 0.1s ease; /* Smooth out line spacing adjustments */
+        }
+
+        .text-input {
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s, font-size 0.1s ease;
+        }
+
+        .text-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        @media print {
+          h2, .controls-section {
+            display: none;
+          }
+          .canvas-section, .text-input, input {
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+            border: 0px 0px 0px 0px;
+            border: none;
+            outline: none;
+          }
+        }
+        small {
+          font-size: 0.8rem;
+          color: #666;
+          font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h2>Tag Creator<br><small>(By Jenner - L7 B2)</small></h2>
+    
+
+    <div class="controls-section">
+        <div class="control-group">
+            <div class="control-label">
+                <label for="sizeInput1">Input 1 Text Size</label>
+                <span id="valInput1">16px</span>
+            </div>
+            <input type="range" id="sizeInput1" min="12" max="60" value="16">
+        </div>
+
+        <div class="control-group">
+            <div class="control-label">
+                <label for="sizeInput2">Input 2 Text Size</label>
+                <span id="valInput2">24px</span>
+            </div>
+            <input type="range" id="sizeInput2" min="12" max="60" value="24">
+        </div>
+
+        <div class="control-group">
+            <div class="control-label">
+                <label for="lineSpacing">Line Spacing (Gap)</label>
+                <span id="valSpacing">20px</span>
+            </div>
+            <input type="range" id="lineSpacing" min="0" max="150" value="20">
+        </div>
+    </div>
+
+    <div class="canvas-section" id="canvas">
+        <input type="text" id="input1" class="text-input" value="This is the first text input field." placeholder="Type something...">
+        <input type="text" id="input2" class="text-input" value="This is the second text input field." placeholder="Type something...">
+    </div>
+</div>
+
+<script>
+    // Elements Setup
+    const slider1 = document.getElementById('sizeInput1');
+    const slider2 = document.getElementById('sizeInput2');
+    const sliderSpacing = document.getElementById('lineSpacing');
+
+    const input1 = document.getElementById('input1');
+    const input2 = document.getElementById('input2');
+    const canvas = document.getElementById('canvas');
+
+    const valInput1 = document.getElementById('valInput1');
+    const valInput2 = document.getElementById('valInput2');
+    const valSpacing = document.getElementById('valSpacing');
+
+    // Initialize Default Styles on Load
+    input1.style.fontSize = slider1.value + 'px';
+    input2.style.fontSize = slider2.value + 'px';
+    canvas.style.gap = sliderSpacing.value + 'px';
+
+    // Event Listener for First Slider (Text size of Input 1)
+    slider1.addEventListener('input', function() {
+        const value = this.value + 'px';
+        input1.style.fontSize = value;
+        valInput1.textContent = value;
+    });
+
+    // Event Listener for Second Slider (Text size of Input 2)
+    slider2.addEventListener('input', function() {
+        const value = this.value + 'px';
+        input2.style.fontSize = value;
+        valInput2.textContent = value;
+    });
+
+    // Event Listener for Third Slider (Space between lines/inputs)
+    sliderSpacing.addEventListener('input', function() {
+        const value = this.value + 'px';
+        canvas.style.gap = value;
+        valSpacing.textContent = value;
+    });
+</script>
+
+</body>
+</html>
